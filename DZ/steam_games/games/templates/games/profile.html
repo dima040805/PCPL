@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Profile</h2>
+
+{% if profile %}
+    <form method="get" action="/get-games/">
+        <p><strong>Steam ID:</strong></p>
+        <input type="text" id="steam_id" name="steam_id" required value="{{ profile.steam_id }}" readonly>
+        <p><strong>Username:</strong> {{ profile.nickname }}</p>
+        <p><img src="{{ profile.avatar_url }}" alt="Avatar" width="64" height="64"></p>
+        <button type="submit">Get Games</button>
+    </form>
+{% else %}
+    <p>No profile found.</p>
+{% endif %}
+
+{% endblock %}

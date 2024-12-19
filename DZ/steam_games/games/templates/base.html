@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    .profile-info {
+        margin-top: 20px;
+    }
+
+    .profile-info p {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .games-button {
+        margin-top: 20px;
+    }
+
+    .games-button button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .games-button button:hover {
+        background-color: #007BFF;
+        color: white;
+    }
+</style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Steam Games{% endblock %}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Steam Games Filter</h1>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Page-specific content will go here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; Steam Games Filter</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Game List{% endblock %}
+
+{% block content %}
+<h2>Games for Steam ID: {{ steam_id }}</h2>
+
+<table id="gamesTable">
+    <thead>
+        <tr>
+            <th onclick="sortTable('name')">Name</th>
+            <th onclick="sortTable('playtime')">Playtime (total hours)</th>
+            <th onclick="sortTable('playtime_2weeks')">Playtime (last 2 weeks)</th>
+            <th onclick="sortTable('friends_with_game')">Friends with Game</th>
+            <th onclick="sortTable('achievements_percentage')">Achievements Percentage</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for game in games %}
+        <tr>
+            <td data-name="{{ game.name }}">{{ game.name }}</td>
+            <td data-playtime="{{ game.playtime_hours }}">{{ game.playtime_hours }}</td>
+            <td data-playtime_2weeks="{{ game.playtime_2weeks }}">{{ game.playtime_2weeks }}</td>
+            <td data-friends_with_game="{{ game.friends_with_game }}">{{ game.friends_with_game }}</td>
+            <td data-achievements_percentage="{{ game.achievements_percentage }}">{{ game.achievements_percentage }}%</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    let sortOrder = {
+        name: true,  // true - ascending, false - descending
+        playtime: true,
+        playtime_2weeks: true,
+        friends_with_game: true,
+        achievements_percentage: true,
+    };
+
+    function sortTable(column) {
+        const table = document.getElementById('gamesTable').querySelector('tbody');
+        const rows = Array.from(table.rows);
+        const isAscending = sortOrder[column];
+
+        rows.sort((rowA, rowB) => {
+            const getData = (row, key) => row.querySelector(`[data-${key}]`).dataset[key];
+            let valA = getData(rowA, column);
+            let valB = getData(rowB, column);
+
+            if (['playtime', 'playtime_2weeks', 'friends_with_game', 'achievements_percentage'].includes(column)) {
+                valA = parseFloat(valA) || 0;
+                valB = parseFloat(valB) || 0;
+            } else {
+                valA = valA.toLowerCase();
+                valB = valB.toLowerCase();
+            }
+
+            return isAscending ? (valA > valB ? 1 : valA < valB ? -1 : 0) : (valA < valB ? 1 : valA > valB ? -1 : 0);
+        });
+
+        rows.forEach(row => table.appendChild(row));
+        sortOrder[column] = !isAscending;
+    }
+
+    function sortGames() {
+        const filter = document.getElementById('filter').value;
+        sortTable(filter);  // Сортировка по выбранному фильтру
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>Welcome to the Steam Games Filter</h2>
+<a href="{% url 'steam_login' %}">
+        <img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_large_border.png" alt="Sign in through Steam">
+</a>
+<form method="get" action="/get-games/">
+    <label for="steam_id">Enter Steam ID:</label>
+    <input type="text" id="steam_id" name="steam_id" required>
+    <button type="submit">Get Games</button>
+</form>
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+{% endblock %}
